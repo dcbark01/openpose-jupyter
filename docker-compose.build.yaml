@@ -1,0 +1,33 @@
+version: '3'
+
+
+services:
+  srv:
+    build:
+      context: .
+    image: dcbark01/openpose-jupyter
+    container_name: dev-openpose-jupyter
+    ports:
+      - "8888:8888"
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+      - NVIDIA_VISIBLE_DEVICES=0
+      - XAUTHORITY=/root/.Xauthority
+      - QT_X11_NO_MITSHM=1
+      - DISPLAY=$DISPLAY
+    runtime: nvidia
+    networks:
+      - openpose_net
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - jupyter-data:/home/jovyan/work
+    command: "start.sh jupyter lab --ip=0.0.0.0 --port=8888 --allow-root --no-browser"
+
+
+networks:
+  openpose_net:
+    external:
+      name: openpose_net
+
+volumes:
+  jupyter-data:

@@ -1,0 +1,10 @@
+.git
+.history
+.vscode
+node_modules
+build
+target
+**/node_modules
+**/bin
+**/obj
+**/out
